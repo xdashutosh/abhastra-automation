@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { MessageSquare, Brain, Sparkles, Lock, CheckCircle, DatabaseBackupIcon } from 'lucide-react';
 
@@ -55,9 +56,46 @@ const Database = ({ className }) => (
 );
 
 const LLMs = () => {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Large Language Models (LLM) Development",
+    "description": "Unlock the power of Generative AI with custom Large Language Models. We build, fine-tune, and deploy state-of-the-art LLMs that understand your business context and generate value.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Abhastra Automation Pvt Ltd",
+      "url": "https://abhastra.com"
+    },
+    "areaServed": "IN",
+    "serviceType": "LLM Development, Generative AI, AI Model Fine-tuning, RAG Implementation"
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-20">
-      <div className="container mx-auto px-6">
+    <div className="min-h-screen bg-slate-50 pt-24 pb-20 relative overflow-hidden">
+      <Helmet>
+        <title>Large Language Models (LLM) Development - Custom AI Solutions | Abhastra</title>
+        <meta name="description" content="Build custom Large Language Models with Abhastra. Fine-tune LLMs on your data, implement RAG, and create AI assistants that understand your business. Secure, specific, and powerful." />
+        <meta name="keywords" content="large language models, LLM, generative AI, custom AI models, AI fine-tuning, RAG, retrieval augmented generation, GPT, ChatGPT, AI assistants, NLP" />
+        <link rel="canonical" href="https://abhastra.com/services/llms" />
+        
+        <meta property="og:title" content="Large Language Models (LLM) Development - Custom AI Solutions" />
+        <meta property="og:description" content="Build custom Large Language Models with Abhastra. Fine-tune LLMs on your data and create AI assistants that understand your business." />
+        <meta property="og:url" content="https://abhastra.com/services/llms" />
+        <meta property="og:type" content="website" />
+        
+        <meta name="twitter:title" content="Large Language Models (LLM) Development - Custom AI Solutions" />
+        <meta name="twitter:description" content="Build custom Large Language Models with Abhastra. Fine-tune LLMs on your data." />
+        
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 via-pink-500/5 to-orange-500/5" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-orange-500/10 rounded-full blur-[120px]" />
+
+      <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -65,11 +103,11 @@ const LLMs = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-600/10 text-purple-600 font-medium mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 text-purple-600 font-medium mb-4">
             <Brain className="w-4 h-4" />
             <span>Generative AI</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Large Language <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">Models</span></h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Large Language <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Models</span></h1>
           <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
             Unlock the power of Generative AI. We build, fine-tune, and deploy state-of-the-art Large Language Models that understand your business context and generate value.
           </p>
@@ -125,12 +163,12 @@ const LLMs = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 group"
+                className="bg-white p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-purple-600/10 flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
+                <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
                   <Icon className="w-6 h-6 text-purple-600 group-hover:text-white transition-colors duration-300" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-purple-600 transition-colors">{feature.title}</h3>
                 <p className="text-slate-600 leading-relaxed">
                   {feature.description}
                 </p>

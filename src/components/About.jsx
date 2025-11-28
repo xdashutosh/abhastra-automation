@@ -11,8 +11,11 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-br from-blue-50/50 via-purple-50/50 via-pink-50/50 to-orange-50/50 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 mix-blend-multiply" />
+    <section id="about" className="py-20 bg-slate-50 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 via-pink-500/5 to-orange-500/5" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-orange-500/10 rounded-full blur-[120px]" />
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16">
@@ -24,7 +27,7 @@ const About = () => {
           >
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 via-purple-500 via-pink-500 to-orange-500 rounded-2xl opacity-20 blur-lg" />
-              <div className="relative bg-white border border-slate-100 rounded-2xl p-8 overflow-hidden shadow-xl">
+              <div className="relative bg-white border border-slate-100 rounded-2xl p-8 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-purple-500/5 to-pink-500/5 rounded-full blur-[80px]" />
                 <h3 className="text-2xl font-bold mb-4 text-slate-900">Why Choose Abhastra?</h3>
                 <p className="text-slate-600 mb-6 leading-relaxed">

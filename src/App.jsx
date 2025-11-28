@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnimatedIntro from './components/AnimatedIntro';
@@ -27,28 +28,30 @@ function App() {
   };
 
   return (
-    <Router>
-      {showIntro && <AnimatedIntro onComplete={handleIntroComplete} />}
-      
-      <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-primary selection:text-white">
-        <Navbar/>
-        <main className="overflow-hidden relative">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about/core-team" element={<CoreTeam />} />
-            <Route path="/about/our-story" element={<OurStory />} />
-            <Route path="/services/ai-automation" element={<AIAutomation />} />
-            <Route path="/services/erp-development" element={<ERPDevelopment />} />
-            <Route path="/services/app-web-development" element={<AppWebDevelopment />} />
-            <Route path="/services/llms" element={<LLMs />} />
-            <Route path="/career" element={<Career />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <HelmetProvider>
+      <Router>
+        {showIntro && <AnimatedIntro onComplete={handleIntroComplete} />}
+        
+        <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-primary selection:text-white">
+          <Navbar/>
+          <main className="overflow-hidden relative">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about/core-team" element={<CoreTeam />} />
+              <Route path="/about/our-story" element={<OurStory />} />
+              <Route path="/services/ai-automation" element={<AIAutomation />} />
+              <Route path="/services/erp-development" element={<ERPDevelopment />} />
+              <Route path="/services/app-web-development" element={<AppWebDevelopment />} />
+              <Route path="/services/llms" element={<LLMs />} />
+              <Route path="/career" element={<Career />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/contact" element={<ContactPage />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </HelmetProvider>
   );
 }
 

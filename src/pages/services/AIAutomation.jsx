@@ -1,6 +1,7 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { Bot, Cpu, Zap, BarChart, CheckCircle } from 'lucide-react';
+import { Bot, Zap, TrendingUp, Shield, CheckCircle } from 'lucide-react';
 
 const features = [
   {
@@ -35,9 +36,46 @@ const benefits = [
 ];
 
 const AIAutomation = () => {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "AI Automation Solutions",
+    "description": "Transform your business operations with cutting-edge AI automation solutions. We build intelligent systems that automate tasks, learn, and improve over time using Machine Learning and RPA.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Abhastra Automation Pvt Ltd",
+      "url": "https://abhastra.com"
+    },
+    "areaServed": "IN",
+    "serviceType": "AI Automation, Intelligent Automation, RPA, Machine Learning"
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-20">
-      <div className="container mx-auto px-6">
+    <div className="min-h-screen bg-slate-50 pt-24 pb-20 relative overflow-hidden">
+      <Helmet>
+        <title>AI Automation Solutions - Intelligent Business Process Automation | Abhastra</title>
+        <meta name="description" content="Transform your business with AI automation. Combine Machine Learning with RPA for intelligent automation that handles unstructured data, makes decisions, and adapts without human intervention." />
+        <meta name="keywords" content="AI automation, intelligent automation, RPA, robotic process automation, machine learning, business process automation, workflow automation, AI solutions" />
+        <link rel="canonical" href="https://abhastra.com/services/ai-automation" />
+        
+        <meta property="og:title" content="AI Automation Solutions - Intelligent Business Process Automation" />
+        <meta property="og:description" content="Transform your business with AI automation. Combine Machine Learning with RPA for intelligent automation that adapts and improves over time." />
+        <meta property="og:url" content="https://abhastra.com/services/ai-automation" />
+        <meta property="og:type" content="website" />
+        
+        <meta name="twitter:title" content="AI Automation Solutions - Intelligent Business Process Automation" />
+        <meta name="twitter:description" content="Transform your business with AI automation. Combine Machine Learning with RPA for intelligent automation." />
+        
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 via-pink-500/5 to-orange-500/5" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-orange-500/10 rounded-full blur-[120px]" />
+
+      <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -45,11 +83,11 @@ const AIAutomation = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 text-blue-600 font-medium mb-4">
             <Bot className="w-4 h-4" />
             <span>Core Service</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">AI <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Automation</span></h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">AI <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Automation</span></h1>
           <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
             Transform your business operations with our cutting-edge AI automation solutions. We build intelligent systems that not only automate tasks but also learn and improve over time.
           </p>
@@ -84,7 +122,7 @@ const AIAutomation = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0" />
                   <span className="text-slate-700 font-medium">{benefit}</span>
                 </div>
               ))}
@@ -103,12 +141,12 @@ const AIAutomation = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 group"
+                className="bg-white p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                  <Icon className="w-6 h-6 text-primary group-hover:text-white transition-colors duration-300" />
+                <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                  <Icon className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors duration-300" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">{feature.title}</h3>
                 <p className="text-slate-600 leading-relaxed">
                   {feature.description}
                 </p>

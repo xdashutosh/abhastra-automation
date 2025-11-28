@@ -4,8 +4,13 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-20 relative bg-gradient-to-br from-blue-50/50 via-purple-50/50 via-pink-50/50 to-orange-50/50">
-      <div className="container mx-auto px-6">
+    <section id="contact" className="py-20 relative bg-slate-50 overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 via-pink-500/5 to-orange-500/5" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-orange-500/10 rounded-full blur-[120px]" />
+
+      <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row gap-16">
           <div className="lg:w-1/2">
             <h2 className="text-3xl md:text-5xl font-bold mb-6 text-slate-900">
@@ -73,7 +78,7 @@ const Contact = () => {
           </div>
 
           <div className="lg:w-1/2">
-            <form className="bg-white border border-slate-100 p-8 rounded-2xl space-y-6 shadow-xl relative overflow-hidden">
+            <form className="bg-white border border-slate-100 p-8 rounded-2xl space-y-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden">
               {/* Subtle gradient background */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 pointer-events-none" />
               
