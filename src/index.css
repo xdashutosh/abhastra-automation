@@ -8,6 +8,10 @@
 
 body {
   @apply bg-slate-50 text-slate-900 font-sans overflow-x-hidden;
+  
+}
+html, body {
+  overflow-x: clip; /* Modern browsers support this */
 }
 
 /* Custom Scrollbar */

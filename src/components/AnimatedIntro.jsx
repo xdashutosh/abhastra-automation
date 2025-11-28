@@ -1,11 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import vid from '../assets/videohero.mp4';
 const AnimatedIntro = ({ onComplete }) => {
   const [stage, setStage] = useState('fullscreen');
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const videoRef = useRef(null);
 
   useEffect(() => {
+    // Try to play video with better mobile support
+    const playVideo = async () => {
+      if (videoRef.current) {
+        try {
+          // Set attributes that help with mobile playback
+          videoRef.current.setAttribute('playsinline', 'true');
+          videoRef.current.setAttribute('webkit-playsinline', 'true');
+          videoRef.current.muted = true;
+          
+          await videoRef.current.play();
+          setVideoLoaded(true);
+        } catch (error) {
+          console.error('Video playback failed:', error);
+          setVideoError(true);
+          setVideoLoaded(true); // Still show content even if video fails
+        }
+      }
+    };
+
+    playVideo();
+  }, []);
+
+  useEffect(() => {
+    if (!videoLoaded) return;
+
     // Fullscreen for 3 seconds
     const timer1 = setTimeout(() => {
       setStage('transitioning');
@@ -21,7 +48,7 @@ const AnimatedIntro = ({ onComplete }) => {
       clearTimeout(timer1);
       clearTimeout(timer2);
     };
-  }, [onComplete]);
+  }, [onComplete, videoLoaded]);
 
   if (stage === 'complete') return null;
 
@@ -35,31 +62,40 @@ const AnimatedIntro = ({ onComplete }) => {
       className="overflow-hidden"
       style={{ position: 'fixed', inset: 0, zIndex: 9999 }}
     >
-      {/* Dark background that shows while video loads */}
-      <div className="absolute inset-0 bg-slate-900" />
+      {/* Dark background that shows while video loads or if it fails */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" />
 
-      {/* Video Background */}
-      <motion.video
-        autoPlay
-        muted
-        loop
-        playsInline
-        onLoadedData={() => setVideoLoaded(true)}
-        className="absolute inset-0 w-full h-full object-cover"
-        initial={{ opacity: 0 }}
-        animate={
-          videoLoaded 
-            ? stage === 'transitioning' 
-              ? { opacity: 0 } 
-              : { opacity: 1 }
-            : { opacity: 0 }
-        }
-        transition={{ duration: videoLoaded ? 1.5 : 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
-      >
-        <source src="https://www.pexels.com/download/video/8764795/" type="video/mp4" />
-      </motion.video>
+      {/* Video Background - only show if no error */}
+      {!videoError && (
+        <motion.video
+          ref={videoRef}
+          muted
+          loop
+          playsInline
+          webkit-playsinline="true"
+          preload="auto"
+          
+          onLoadedData={() => setVideoLoaded(true)}
+          onError={() => {
+            setVideoError(true);
+            setVideoLoaded(true);
+          }}
+          className="absolute inset-0 w-full h-full object-cover"
+          initial={{ opacity: 0 }}
+          animate={
+            videoLoaded 
+              ? stage === 'transitioning' 
+                ? { opacity: 0 } 
+                : { opacity: 1 }
+              : { opacity: 0 }
+          }
+          transition={{ duration: videoLoaded ? 1.5 : 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
+        >
+          <source src={vid} type="video/mp4" />
+        </motion.video>
+      )}
 
-      {/* Dark overlay for better text visibility - only show when video is loaded */}
+      {/* Dark overlay for better text visibility */}
       {videoLoaded && (
         <motion.div 
           className="absolute inset-0 bg-black/40"
