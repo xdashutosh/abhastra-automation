@@ -98,7 +98,7 @@ const Hero = () => {
         },
       },
       shape: {
-        type: ["circle", "triangle", "edge", "polygon", "star"],
+        type: ["circle"],
         polygon: {
           nb_sides: 6,
         },
