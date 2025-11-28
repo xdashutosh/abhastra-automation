@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import vid from '../assets/videohero.mp4';
-
+import brandname from '../assets/brandname.png';
 const AnimatedIntro = ({ onComplete }) => {
   const [stage, setStage] = useState('fullscreen');
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -105,8 +105,8 @@ const AnimatedIntro = ({ onComplete }) => {
       className="overflow-hidden"
       style={{ position: 'fixed', inset: 0, zIndex: 9999 }}
     >
-      {/* Dark background that shows while video loads or if it fails */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" />
+      {/* Dark background with brand gradient - shows while video loads or if it fails */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 via-pink-900 via-red-900 to-orange-900" />
 
       {/* Video Background - only show if no error */}
       {!videoError && (
@@ -170,14 +170,21 @@ const AnimatedIntro = ({ onComplete }) => {
                 className="text-5xl sm:text-6xl md:text-8xl font-bold text-white mb-4"
                 animate={{
                   textShadow: [
-                    '0 0 20px rgba(0, 188, 212, 0.5)',
-                    '0 0 40px rgba(98, 0, 234, 0.5)',
-                    '0 0 20px rgba(0, 188, 212, 0.5)',
+                    '0 0 20px rgba(37, 99, 235, 0.6)',
+                    '0 0 40px rgba(168, 85, 247, 0.6)',
+                    '0 0 40px rgba(236, 72, 153, 0.6)',
+                    '0 0 40px rgba(239, 68, 68, 0.6)',
+                    '0 0 40px rgba(249, 115, 22, 0.6)',
+                    '0 0 20px rgba(37, 99, 235, 0.6)',
                   ],
                 }}
-                transition={{ duration: 2, repeat: Infinity }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
               >
-                Abhastra<span className="text-primary">.</span>
+                  <img 
+                                src={brandname} 
+                                alt="Abhastra" 
+                                className="h-20 object-contain"
+                              />
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }}

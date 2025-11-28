@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 import { Zap, Shield, Users, TrendingUp, Award, Sparkles } from 'lucide-react';
 import img1 from '../assets/img1.png'
 import gif2 from '../assets/leaders.gif'
+
 const reasons = [
   {
     icon: Zap,
     title: 'Lightning-Fast Implementation',
     description: 'Our AI-driven development process cuts implementation time by 60%, getting your solutions to market faster than traditional approaches.',
-    color: 'from-cyan-500 to-blue-500',
+    color: 'from-blue-500 to-purple-500',
   },
   {
     icon: Shield,
@@ -20,25 +21,25 @@ const reasons = [
     icon: Users,
     title: 'Dedicated Expert Team',
     description: 'Work with seasoned AI engineers, full-stack developers, and IoT specialists who bring years of industry experience.',
-    color: 'from-orange-500 to-red-500',
+    color: 'from-pink-500 to-red-500',
   },
   {
     icon: TrendingUp,
     title: 'Proven ROI',
     description: 'Our clients see an average 300% ROI within the first year through automation, efficiency gains, and reduced operational costs.',
-    color: 'from-green-500 to-emerald-500',
+    color: 'from-red-500 to-orange-500',
   },
   {
     icon: Award,
     title: 'Award-Winning Innovation',
     description: 'Recognized for excellence in AI and automation, we stay ahead of the curve with cutting-edge research and development.',
-    color: 'from-indigo-500 to-purple-500',
+    color: 'from-orange-500 to-yellow-500',
   },
   {
     icon: Sparkles,
     title: 'Future-Proof Technology',
     description: 'We build scalable, modular solutions that grow with your business and adapt to emerging technologies seamlessly.',
-    color: 'from-pink-500 to-rose-500',
+    color: 'from-yellow-500 to-blue-500',
   },
 ];
 
@@ -46,9 +47,9 @@ const WhyChoose = () => {
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-[120px]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 via-pink-500/5 to-orange-500/5" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-orange-500/10 rounded-full blur-[120px]" />
       
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
@@ -60,7 +61,7 @@ const WhyChoose = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-slate-900">
-            Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Abhastra Automation?</span>
+            Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 via-pink-600 via-red-600 to-orange-600">Abhastra Automation?</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
             We don't just deliver projects—we build partnerships that transform your business. 
@@ -87,7 +88,7 @@ const WhyChoose = () => {
                 </div>
                 
                 {/* Content */}
-                <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:via-purple-600 group-hover:to-pink-600 transition-all">
                   {reason.title}
                 </h3>
                 <p className="text-slate-600 leading-relaxed">
@@ -95,7 +96,7 @@ const WhyChoose = () => {
                 </p>
 
                 {/* Hover effect border */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/0 to-secondary/0 group-hover:from-primary/10 group-hover:to-secondary/10 transition-all duration-300 pointer-events-none" />
+                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${reason.color} opacity-0 group-hover:opacity-10 transition-all duration-300 pointer-events-none`} />
               </div>
             </motion.div>
           ))}
@@ -110,7 +111,7 @@ const WhyChoose = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="absolute  rounded-3xl opacity-20 blur-2xl" />
+            <div className="absolute rounded-3xl opacity-20 blur-2xl" />
             <img 
               src={gif2}
               alt="AI Automation Technology"
@@ -133,20 +134,20 @@ const WhyChoose = () => {
               to deliver mission-critical AI solutions that drive real results.
             </p>
             <div className="grid grid-cols-2 gap-6">
-              <div className="p-6 rounded-xl bg-slate-50 border border-slate-100">
-                <div className="text-3xl font-bold text-primary mb-2">50+</div>
+              <div className="p-6 rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 border border-slate-100">
+                <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">50+</div>
                 <div className="text-sm text-slate-600">Projects Delivered</div>
               </div>
-              <div className="p-6 rounded-xl bg-slate-50 border border-slate-100">
-                <div className="text-3xl font-bold text-secondary mb-2">100%</div>
+              <div className="p-6 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-slate-100">
+                <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">100%</div>
                 <div className="text-sm text-slate-600">Client Satisfaction</div>
               </div>
-              <div className="p-6 rounded-xl bg-slate-50 border border-slate-100">
-                <div className="text-3xl font-bold text-primary mb-2">24/7</div>
+              <div className="p-6 rounded-xl bg-gradient-to-br from-pink-50 to-red-50 border border-slate-100">
+                <div className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent mb-2">24/7</div>
                 <div className="text-sm text-slate-600">Support Available</div>
               </div>
-              <div className="p-6 rounded-xl bg-slate-50 border border-slate-100">
-                <div className="text-3xl font-bold text-secondary mb-2">10+</div>
+              <div className="p-6 rounded-xl bg-gradient-to-br from-red-50 to-orange-50 border border-slate-100">
+                <div className="text-3xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent mb-2">10+</div>
                 <div className="text-sm text-slate-600">Years Experience</div>
               </div>
             </div>
@@ -171,8 +172,8 @@ const WhyChoose = () => {
             </p>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
-                  <div className="w-2 h-2 rounded-full bg-primary" />
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-br from-blue-600 to-purple-600" />
                 </div>
                 <div>
                   <div className="font-semibold text-slate-900">Continuous Innovation</div>
@@ -180,8 +181,8 @@ const WhyChoose = () => {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-secondary/20 flex items-center justify-center flex-shrink-0 mt-1">
-                  <div className="w-2 h-2 rounded-full bg-secondary" />
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-br from-purple-600 to-pink-600" />
                 </div>
                 <div>
                   <div className="font-semibold text-slate-900">Agile Methodology</div>
@@ -189,8 +190,8 @@ const WhyChoose = () => {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
-                  <div className="w-2 h-2 rounded-full bg-primary" />
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500/20 to-red-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-br from-pink-600 to-red-600" />
                 </div>
                 <div>
                   <div className="font-semibold text-slate-900">End-to-End Support</div>
