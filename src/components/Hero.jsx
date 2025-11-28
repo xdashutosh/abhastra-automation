@@ -1,19 +1,99 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Bot, CircuitBoard, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import vid from '../assets/videohero.mp4';
 
 const Hero = () => {
+  const videoRef = useRef(null);
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const playVideo = async () => {
+      if (!videoRef.current || !isMounted) return;
+
+      try {
+        // Ensure video is muted (iOS requirement for autoplay)
+        videoRef.current.muted = true;
+        videoRef.current.defaultMuted = true;
+        
+        // Wait a brief moment
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        const playPromise = videoRef.current.play();
+        
+        if (playPromise !== undefined) {
+          await playPromise;
+          if (isMounted) {
+            console.log('Hero video playing successfully');
+            setVideoReady(true);
+          }
+        }
+      } catch (error) {
+        console.error('Hero video playback failed:', error);
+        if (isMounted) {
+          setVideoReady(true); // Still show content
+        }
+      }
+    };
+
+    const handleCanPlay = () => {
+      console.log('Hero video can play');
+      playVideo();
+    };
+
+    const handleLoadedMetadata = () => {
+      console.log('Hero video metadata loaded');
+      playVideo();
+    };
+
+    if (videoRef.current) {
+      videoRef.current.addEventListener('canplay', handleCanPlay);
+      videoRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+      
+      const fallbackTimer = setTimeout(() => {
+        if (isMounted) {
+          playVideo();
+        }
+      }, 500);
+      
+      return () => {
+        isMounted = false;
+        if (videoRef.current) {
+          videoRef.current.removeEventListener('canplay', handleCanPlay);
+          videoRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        }
+        clearTimeout(fallbackTimer);
+      };
+    }
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Video Background */}
       <video
+        ref={videoRef}
         autoPlay
         muted
+        defaultMuted
         loop
         playsInline
+        preload="auto"
+        webkit-playsinline="true"
+        x-webkit-airplay="allow"
         className="absolute inset-0 w-full h-full object-cover"
+        onLoadedData={() => {
+          console.log('Hero video data loaded');
+          setVideoReady(true);
+        }}
+        onError={(e) => {
+          console.error('Hero video error:', e);
+          setVideoReady(true);
+        }}
+        style={{ WebkitTransform: 'translateZ(0)' }}
       >
-        <source src="https://www.pexels.com/download/video/8764795/" type="video/mp4" />
+        <source src={vid} type="video/mp4" />
       </video>
 
       {/* Dark overlay for better text visibility */}
@@ -66,8 +146,6 @@ const Hero = () => {
             </button>
           </motion.div>
         </div>
-
-
       </div>
     </section>
   );

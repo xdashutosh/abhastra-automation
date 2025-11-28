@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import vid from '../assets/videohero.mp4';
+
 const AnimatedIntro = ({ onComplete }) => {
   const [stage, setStage] = useState('fullscreen');
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -8,26 +9,68 @@ const AnimatedIntro = ({ onComplete }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    // Try to play video with better mobile support
+    let isMounted = true;
+
     const playVideo = async () => {
-      if (videoRef.current) {
-        try {
-          // Set attributes that help with mobile playback
-          videoRef.current.setAttribute('playsinline', 'true');
-          videoRef.current.setAttribute('webkit-playsinline', 'true');
-          videoRef.current.muted = true;
-          
-          await videoRef.current.play();
-          setVideoLoaded(true);
-        } catch (error) {
-          console.error('Video playback failed:', error);
+      if (!videoRef.current || !isMounted) return;
+
+      try {
+        // Ensure video is muted before attempting to play (iOS requirement)
+        videoRef.current.muted = true;
+        videoRef.current.defaultMuted = true;
+        
+        // Wait a brief moment for the video to be ready
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        const playPromise = videoRef.current.play();
+        
+        if (playPromise !== undefined) {
+          await playPromise;
+          if (isMounted) {
+            console.log('Video playing successfully');
+            setVideoLoaded(true);
+          }
+        }
+      } catch (error) {
+        console.error('Video playback failed:', error);
+        if (isMounted) {
           setVideoError(true);
-          setVideoLoaded(true); // Still show content even if video fails
+          setVideoLoaded(true);
         }
       }
     };
 
-    playVideo();
+    const handleCanPlay = () => {
+      console.log('Video can play');
+      playVideo();
+    };
+
+    const handleLoadedMetadata = () => {
+      console.log('Video metadata loaded');
+      playVideo();
+    };
+
+    // Wait for video to be ready before trying to play
+    if (videoRef.current) {
+      videoRef.current.addEventListener('canplay', handleCanPlay);
+      videoRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+      
+      // Fallback: try to play after a short delay
+      const fallbackTimer = setTimeout(() => {
+        if (isMounted) {
+          playVideo();
+        }
+      }, 500);
+      
+      return () => {
+        isMounted = false;
+        if (videoRef.current) {
+          videoRef.current.removeEventListener('canplay', handleCanPlay);
+          videoRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        }
+        clearTimeout(fallbackTimer);
+      };
+    }
   }, []);
 
   useEffect(() => {
@@ -70,13 +113,19 @@ const AnimatedIntro = ({ onComplete }) => {
         <motion.video
           ref={videoRef}
           muted
+          defaultMuted
           loop
           playsInline
-          webkit-playsinline="true"
+          autoPlay
           preload="auto"
-          
-          onLoadedData={() => setVideoLoaded(true)}
-          onError={() => {
+          webkit-playsinline="true"
+          x-webkit-airplay="allow"
+          onLoadedData={() => {
+            console.log('Video data loaded');
+            if (!videoLoaded) setVideoLoaded(true);
+          }}
+          onError={(e) => {
+            console.error('Video error:', e);
             setVideoError(true);
             setVideoLoaded(true);
           }}
@@ -90,6 +139,7 @@ const AnimatedIntro = ({ onComplete }) => {
               : { opacity: 0 }
           }
           transition={{ duration: videoLoaded ? 1.5 : 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
+          style={{ WebkitTransform: 'translateZ(0)' }}
         >
           <source src={vid} type="video/mp4" />
         </motion.video>
@@ -115,9 +165,9 @@ const AnimatedIntro = ({ onComplete }) => {
             transition={{ duration: 0.5 }}
             className="absolute inset-0 flex items-center justify-center z-10"
           >
-            <div className="text-center">
+            <div className="text-center px-4">
               <motion.h1
-                className="text-6xl md:text-8xl font-bold text-white mb-4"
+                className="text-5xl sm:text-6xl md:text-8xl font-bold text-white mb-4"
                 animate={{
                   textShadow: [
                     '0 0 20px rgba(0, 188, 212, 0.5)',
@@ -133,7 +183,7 @@ const AnimatedIntro = ({ onComplete }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="text-2xl text-white"
+                className="text-xl sm:text-2xl text-white"
               >
                 Automating Everything with AI
               </motion.p>
