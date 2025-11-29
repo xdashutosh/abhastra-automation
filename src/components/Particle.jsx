@@ -1,9 +1,46 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Stars } from '@react-three/drei';
 
+// -----------------------------------------------------------------------------
+// 1. BACKGROUND MOVING STARS COMPONENT
+// -----------------------------------------------------------------------------
+const MovingStars = () => {
+  const ref = useRef();
+
+  useFrame((state, delta) => {
+    if (ref.current) {
+      // Rotate the stars slowly to create the "drifting in space" feeling
+      ref.current.rotation.x -= delta / 15;
+      ref.current.rotation.y -= delta / 20;
+    }
+  });
+
+  return (
+    <group rotation={[0, 0, Math.PI / 4]}>
+      <group ref={ref}>
+        <Stars 
+          radius={100} 
+          depth={50} 
+          count={5000} 
+          factor={4} 
+          saturation={0} 
+          fade 
+          speed={1} 
+        />
+      </group>
+    </group>
+  );
+};
+
+// -----------------------------------------------------------------------------
+// 2. MAIN PARTICLE WORDS COMPONENT
+// -----------------------------------------------------------------------------
 const ParticleWords = () => {
   const canvasRef = useRef(null);
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const particlesRef = useRef([]);
+  const wordIndexRef = useRef(0);
   
   const words = ['AI', 'AUTOMATION', 'INNOVATION', 'FUTURE', 'ABHASTRA'];
   
@@ -13,7 +50,6 @@ const ParticleWords = () => {
 
     const ctx = canvas.getContext('2d');
     let animationFrameId;
-    let particles = [];
     let isTransitioning = false;
     
     // Set canvas size
@@ -30,13 +66,11 @@ const ParticleWords = () => {
         this.y = y;
         this.targetX = targetX;
         this.targetY = targetY;
-        this.originalX = targetX;
-        this.originalY = targetY;
         this.vx = 0;
         this.vy = 0;
         this.color = color;
-        this.size = 2;
-        this.ease = 0.08;
+        this.size = 2; 
+        this.ease = 0.1; 
       }
 
       update() {
@@ -55,14 +89,20 @@ const ParticleWords = () => {
 
       draw() {
         ctx.fillStyle = this.color;
+        // Glow effect
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = this.color;
+        
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
+        
+        ctx.shadowBlur = 0;
       }
 
       scatter() {
         const angle = Math.random() * Math.PI * 2;
-        const distance = Math.random() * 200 + 100;
+        const distance = Math.random() * 300 + 100; 
         this.targetX = this.x + Math.cos(angle) * distance;
         this.targetY = this.y + Math.sin(angle) * distance;
       }
@@ -70,8 +110,6 @@ const ParticleWords = () => {
       setTarget(x, y) {
         this.targetX = x;
         this.targetY = y;
-        this.originalX = x;
-        this.originalY = y;
       }
     }
 
@@ -79,12 +117,11 @@ const ParticleWords = () => {
       const tempCanvas = document.createElement('canvas');
       const tempCtx = tempCanvas.getContext('2d');
       
-      // Responsive font size
-      const fontSize = Math.min(canvas.width / 8, 120);
+      const fontSize = Math.min(canvas.width / 6, 140);
       tempCanvas.width = canvas.width;
       tempCanvas.height = canvas.height;
       
-      tempCtx.font = `bold ${fontSize}px Arial`;
+      tempCtx.font = `900 ${fontSize}px Inter, system-ui, sans-serif`;
       tempCtx.fillStyle = 'white';
       tempCtx.textAlign = 'center';
       tempCtx.textBaseline = 'middle';
@@ -93,7 +130,6 @@ const ParticleWords = () => {
       const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
       const coordinates = [];
       
-      // Sample pixels with spacing for performance
       const spacing = 4;
       for (let y = 0; y < tempCanvas.height; y += spacing) {
         for (let x = 0; x < tempCanvas.width; x += spacing) {
@@ -103,106 +139,101 @@ const ParticleWords = () => {
           }
         }
       }
-      
       return coordinates;
     };
 
     const gradientColors = [
-      '#2563eb', // blue
-      '#9333ea', // purple
-      '#ec4899', // pink
-      '#ef4444', // red
-      '#f97316', // orange
-      '#eab308', // yellow
+      '#60a5fa', // blue-400
+      '#c084fc', // purple-400
+      '#f472b6', // pink-400
+      '#f87171', // red-400
+      '#fb923c', // orange-400
+      '#facc15', // yellow-400
     ];
 
-    const createParticlesForWord = (word) => {
+    const updateParticlesForWord = (word) => {
       const coords = getTextCoordinates(word);
+      const currentParticles = particlesRef.current;
       const newParticles = [];
       
-      coords.forEach((coord, i) => {
+      for (let i = 0; i < coords.length; i++) {
+        const coord = coords[i];
         const colorIndex = Math.floor((i / coords.length) * gradientColors.length);
         const color = gradientColors[colorIndex];
-        
-        if (particles[i]) {
-          particles[i].setTarget(coord.x, coord.y);
-          particles[i].color = color;
-          newParticles.push(particles[i]);
+
+        if (currentParticles[i]) {
+          currentParticles[i].setTarget(coord.x, coord.y);
+          currentParticles[i].color = color;
+          newParticles.push(currentParticles[i]);
         } else {
-          // Random starting position for new particles
-          const startX = Math.random() * canvas.width;
-          const startY = Math.random() * canvas.height;
+          const startX = canvas.width / 2 + (Math.random() - 0.5) * 200;
+          const startY = canvas.height / 2 + (Math.random() - 0.5) * 200;
           newParticles.push(new Particle(startX, startY, coord.x, coord.y, color));
         }
-      });
-      
-      return newParticles;
+      }
+      particlesRef.current = newParticles;
     };
 
     const transitionToNextWord = () => {
       if (isTransitioning) return;
       isTransitioning = true;
       
-      // Scatter current particles
-      particles.forEach(p => p.scatter());
+      particlesRef.current.forEach(p => p.scatter());
       
-      // Wait for scatter, then form new word
       setTimeout(() => {
-        setCurrentWordIndex((prev) => (prev + 1) % words.length);
+        wordIndexRef.current = (wordIndexRef.current + 1) % words.length;
+        updateParticlesForWord(words[wordIndexRef.current]);
         isTransitioning = false;
-      }, 800);
+      }, 600);
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
+      particlesRef.current.forEach(particle => {
         particle.update();
         particle.draw();
       });
-      
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    // Initialize with first word
-    particles = createParticlesForWord(words[currentWordIndex]);
+    updateParticlesForWord(words[0]);
     animate();
 
-    // Transition every 3 seconds
-    const intervalId = setInterval(transitionToNextWord, 3000);
+    const intervalId = setInterval(transitionToNextWord, 3500);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animationFrameId);
       clearInterval(intervalId);
     };
-  }, [currentWordIndex]);
+  }, []);
 
   return (
-    <section className="relative py-32  overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute " />
+    <section className="relative py-32 h-[60vh] overflow-hidden bg-slate-950 flex items-center justify-center">
       
-      {/* Canvas for particles */}
+      {/* 1. 3D Background Layer (Moving Space) */}
+      <div className="absolute inset-0 z-0">
+        <Canvas camera={{ position: [0, 0, 1] }}>
+            <MovingStars />
+        </Canvas>
+      </div>
+
+      {/* 2. Gradient Overlay to blend stars nicely with dark theme */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950 opacity-80" />
+      
+      {/* 3. 2D Canvas Layer (Particle Text) */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full z-10"
       />
       
-      {/* Content overlay */}
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-20 pointer-events-none">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           className="text-center"
-        >
-         
-          
-       
-          
-         
-        </motion.div>
+        />
       </div>
     </section>
   );

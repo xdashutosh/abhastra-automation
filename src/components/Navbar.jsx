@@ -53,7 +53,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-6'}`}>
+    // Changed: bg-white -> bg-slate-950, added border-slate-800 for definition
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-950/80 backdrop-blur-md py-4 shadow-sm border-b border-white/10' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 via-purple-600 via-pink-600 to-orange-500 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(219,39,119,0.5)] transition-all overflow-hidden p-1.5">
@@ -66,7 +67,7 @@ const Navbar = () => {
           <img 
             src={brandname} 
             alt="Abhastra" 
-            className="h-10 object-contain"
+            className="h-10 object-contain brightness-0 invert" // Added invert assuming logo is black, remove if logo is already white
           />
         </Link>
 
@@ -80,16 +81,18 @@ const Navbar = () => {
               onMouseLeave={handleDropdownLeave}
             >
               {link.dropdown ? (
+                // Changed: text-slate-700 -> text-slate-300
                 <button 
-                  className={`flex items-center gap-1 transition-colors text-sm font-medium tracking-wide group ${scrolled ? 'text-slate-600' : 'text-slate-700'} hover:text-primary`}
+                  className={`flex items-center gap-1 transition-colors text-sm font-medium tracking-wide group ${scrolled ? 'text-slate-300' : 'text-slate-200'} hover:text-white`}
                 >
                   {link.name}
                   <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === link.name ? 'rotate-180' : ''}`} />
                 </button>
               ) : (
+                // Changed: text-slate-700 -> text-slate-300
                 <Link 
                   to={link.path} 
-                  className={`transition-colors text-sm font-medium tracking-wide relative group ${scrolled ? 'text-slate-600' : 'text-slate-700'} ${location.pathname === link.path ? 'text-primary' : ''}`}
+                  className={`transition-colors text-sm font-medium tracking-wide relative group ${scrolled ? 'text-slate-300' : 'text-slate-200'} hover:text-white ${location.pathname === link.path ? 'text-white' : ''}`}
                 >
                   {link.name}
                   <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 via-pink-600 to-orange-500 transition-all duration-300 ${location.pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
@@ -104,13 +107,15 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden py-2"
+                    // Changed: bg-white -> bg-slate-900, border-slate-100 -> border-slate-800
+                    className="absolute top-full left-0 mt-2 w-56 bg-slate-900 rounded-xl shadow-xl border border-slate-800 overflow-hidden py-2"
                   >
                     {link.dropdown.map((subLink) => (
                       <Link
                         key={subLink.name}
                         to={subLink.path}
-                        className="block px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors"
+                        // Changed: text-slate-600 -> text-slate-400, hover:bg-slate-50 -> hover:bg-slate-800
+                        className="block px-4 py-2.5 text-sm text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
                       >
                         {subLink.name}
                       </Link>
@@ -127,7 +132,8 @@ const Navbar = () => {
 
         {/* Mobile Toggle */}
         <button 
-          className="md:hidden text-slate-800"
+          // Changed: text-slate-800 -> text-white
+          className="md:hidden text-white"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -142,21 +148,25 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/95 backdrop-blur-xl border-b border-slate-100 overflow-hidden"
+            // Changed: bg-white/95 -> bg-slate-950/95, border-slate-100 -> border-slate-800
+            className="md:hidden bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 overflow-hidden"
           >
             <div className="flex flex-col p-6 gap-4 max-h-[80vh] overflow-y-auto">
               {navLinks.map((link) => (
                 <div key={link.name}>
                   {link.dropdown ? (
                     <div className="space-y-2">
-                      <div className="text-lg font-medium text-slate-800">{link.name}</div>
-                      <div className="pl-4 border-l-2 border-slate-100 space-y-2">
+                      {/* Changed: text-slate-800 -> text-slate-200 */}
+                      <div className="text-lg font-medium text-slate-200">{link.name}</div>
+                      {/* Changed: border-slate-100 -> border-slate-800 */}
+                      <div className="pl-4 border-l-2 border-slate-800 space-y-2">
                         {link.dropdown.map((subLink) => (
                           <Link
                             key={subLink.name}
                             to={subLink.path}
                             onClick={() => setIsOpen(false)}
-                            className="block text-slate-600 hover:text-primary transition-colors"
+                            // Changed: text-slate-600 -> text-slate-400
+                            className="block text-slate-400 hover:text-white transition-colors"
                           >
                             {subLink.name}
                           </Link>
@@ -167,7 +177,8 @@ const Navbar = () => {
                     <Link 
                       to={link.path}
                       onClick={() => setIsOpen(false)}
-                      className="block text-lg font-medium text-slate-600 hover:text-primary transition-colors"
+                      // Changed: text-slate-600 -> text-slate-300
+                      className="block text-lg font-medium text-slate-300 hover:text-white transition-colors"
                     >
                       {link.name}
                     </Link>

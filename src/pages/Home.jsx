@@ -129,7 +129,7 @@ const Home = () => {
       </Helmet>
 
       <Hero />
-      <ParticleWords/>
+      {/* <ParticleWords/> */}
       <Services />
       <WhyChoose />
       <TechStack />

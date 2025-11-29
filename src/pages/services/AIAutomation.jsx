@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { Bot, Zap, TrendingUp, Shield, CheckCircle } from 'lucide-react';
+import { Bot, Zap, TrendingUp, Shield, CheckCircle, BarChart, Cpu } from 'lucide-react';
 
 const features = [
   {

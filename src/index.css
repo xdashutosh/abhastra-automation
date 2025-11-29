@@ -8,11 +8,15 @@
 
 body {
   @apply bg-slate-50 text-slate-900 font-sans overflow-x-hidden;
-  
+
 }
-html, body {
-  overflow-x: clip; /* Modern browsers support this */
+
+html,
+body {
+  overflow-x: clip;
+  /* Modern browsers support this */
 }
+
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -43,10 +47,12 @@ html, body {
 /* Gradient shift animation */
 @keyframes gradient-shift {
 
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
 
   50% {
     background-position: 100% 50%;
