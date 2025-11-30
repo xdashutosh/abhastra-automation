@@ -1,8 +1,7 @@
-import React, { useRef, Suspense } from 'react';
+import React, { useRef, Suspense, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { PointMaterial, Stars, Float, useGLTF } from '@react-three/drei';
+import { PointMaterial, Stars, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
-import { motion } from 'framer-motion';
 import { Brain, Sparkles, Move } from 'lucide-react';
 
 // -----------------------------------------------------------------------------
@@ -10,50 +9,46 @@ import { Brain, Sparkles, Move } from 'lucide-react';
 // -----------------------------------------------------------------------------
 const ParticleHead = (props) => {
   const meshRef = useRef();
-  // Using the GLTF hook. 
-  // TIP: Ensure your .glb file is compressed (use gltf-pipeline or draco)
-   const { nodes } = useGLTF('/LeePerrySmith.glb', true);
+  const { nodes } = useGLTF('/LeePerrySmith.glb');
   const { viewport } = useThree();
+
+  // Create a reusable vector to avoid garbage collection every frame
+  const targetRotation = useMemo(() => new THREE.Vector2(), []);
 
   useFrame((state) => {
     if (!meshRef.current) return;
 
-    // 1. Calculate Mouse Position (throttling isn't strictly necessary here via r3f, 
-    // but calculating against viewport is efficient)
+    // Calculate mouse position relative to viewport
     const mouseX = (state.pointer.x * viewport.width) / 2;
     const mouseY = (state.pointer.y * viewport.height) / 2;
 
-    const headPositionX = 2;
-    const headPositionY = -0.5;
+    const headX = 2; // Approximate world X position
+    const headY = -0.5; // Approximate world Y position
     
-    const diffX = mouseX - headPositionX;
-    const diffY = mouseY - headPositionY;
-    const distanceToScreen = 4; 
+    // Simple look-at math
+    const diffX = mouseX - headX;
+    const diffY = mouseY - headY;
+    
+    // Update target rotation
+    targetRotation.x = Math.atan2(diffY, 4); // X-axis rot (up/down)
+    targetRotation.y = Math.atan2(diffX, 4); // Y-axis rot (left/right)
 
-    // Smooth rotation
-    const targetRotationY = Math.atan2(diffX, distanceToScreen);
-    const targetRotationX = Math.atan2(diffY, distanceToScreen);
-
-    meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotationY, 0.1);
-    meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, -targetRotationX, 0.1);
+    // Smooth interpolation (dampening)
+    // using 0.05 is smoother/slower, less jittery than 0.1
+    meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, -targetRotation.x, 0.05);
+    meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotation.y, 0.05);
   });
 
   return (
     <group {...props}>
-      {/* 
-        OPTIMIZATION: We only render the points, not the mesh surface.
-        Using a fixed key helps React verify identity.
-      */}
       <points ref={meshRef} position={[0, 0, 0]} scale={[0.8, 0.8, 0.8]}>
-        {/* Pass the geometry directly from the loaded GLTF nodes */}
         <primitive object={nodes.LeePerrySmith.geometry} attach="geometry" />
         <PointMaterial
           transparent
-          vertexColors={false}
-          color="#8b5cf6" 
-          size={0.015}     
+          color="#8b5cf6"
+          size={0.015}
           sizeAttenuation={true}
-          depthWrite={false} // Important for performance with transparency
+          depthWrite={false}
           opacity={0.8}
         />
       </points>
@@ -61,37 +56,30 @@ const ParticleHead = (props) => {
   );
 };
 
-// Preload the model so it doesn't stutter on first interaction
-useGLTF.preload('/LeePerrySmith.glb');
-
 // -----------------------------------------------------------------------------
-// 2. BACKGROUND STAR FIELD
+// 2. BACKGROUND STAR FIELD (Static or Low Cost)
 // -----------------------------------------------------------------------------
 const SpaceBackground = () => {
   const ref = useRef();
-
+  
+  // Very slow rotation - minimal performance impact
   useFrame((state, delta) => {
-    if (ref.current) {
-      // Reduced rotation speed slightly to save calculations if not needed
-      ref.current.rotation.x -= delta / 15;
-      ref.current.rotation.y -= delta / 20;
+    if(ref.current) {
+      ref.current.rotation.y -= delta / 50; 
     }
   });
 
   return (
-    <group rotation={[0, 0, Math.PI / 4]}>
-      <group ref={ref}>
-        {/* OPTIMIZATION: Reduced count from 6000 to 4000 (visual difference is low) */}
-        <Stars 
-          radius={50}
-          depth={50} 
-          count={1500} 
-          factor={4}
-          saturation={0} 
-          fade 
-          speed={1.5} 
-        />
-      </group>
+    <group rotation={[0, 0, Math.PI / 4]} ref={ref}>
+      <Stars 
+        radius={50} 
+        depth={50} 
+        count={1000} // Reduced from 1500 -> 1000 for mobile perf
+        factor={4} 
+        saturation={0} 
+        fade 
+        speed={1} 
+      />
     </group>
   );
 };
@@ -105,27 +93,24 @@ const Hero = () => {
       
       {/* 3D Canvas Layer */}
       <div className="absolute inset-0 z-0">
-        <Canvas 
-          // OPTIMIZATION 1: Cap the Pixel Ratio. 
-          // [1, 1.5] prevents 4k rendering on mobile/retina screens which kills FPS.
-          dpr={[1, 1.5]} 
-          
-          // OPTIMIZATION 2: Render settings
+        <Canvas
+          // CRITICAL OPTIMIZATION: Force Pixel Ratio to 1. 
+          // Prevents 4k rendering on Retina displays which destroys FPS.
+          dpr={1} 
           gl={{ 
-            antialias: false, // Particles usually don't need expensive antialias
+            antialias: false, // Particles don't need AA
             powerPreference: "high-performance",
-            preserveDrawingBuffer: false
+            alpha: false, // We have a background color, no need for alpha buffer
           }}
           camera={{ position: [0, 0, 5], fov: 60 }}
         >
+          <color attach="background" args={['#020617']} /> {/* slate-950 hex */}
           <ambientLight intensity={0.5} />
           
-          {/* Suspense allows the UI to load while 3D is preparing */}
           <Suspense fallback={null}>
             <SpaceBackground />
-            <Float speed={2} rotationIntensity={0.2} floatIntensity={0.2} position={[2, -0.5, 0]}>
-              <ParticleHead />
-            </Float>
+            {/* Removed <Float> to save CPU cycles */}
+            <ParticleHead position={[2, -0.5, 0]} /> 
           </Suspense>
         </Canvas>
       </div>
@@ -134,64 +119,63 @@ const Hero = () => {
       <div className="relative z-10 container mx-auto px-6 h-full flex flex-col justify-center items-start pointer-events-none">
         
         <div className="max-w-3xl pointer-events-auto">
+          
           {/* Badge */}
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 backdrop-blur-md border border-purple-500/30 mb-6"
-          >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 backdrop-blur-md border border-purple-500/30 mb-6 animate-fade-in opacity-0" style={{ animationDelay: '0ms' }}>
             <Sparkles className="w-4 h-4 text-purple-400" />
             <span className="text-sm font-medium tracking-wide text-purple-100">AI-Powered Neural Systems</span>
-          </motion.div>
+          </div>
 
           {/* Heading */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
-          >
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-fade-in opacity-0" style={{ animationDelay: '200ms' }}>
             Automating Everything <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
               With Intelligence
             </span>
-          </motion.h1>
+          </h1>
 
           {/* Subtext */}
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-slate-400 mb-10 max-w-xl leading-relaxed"
-          >
+          <p className="text-xl md:text-2xl text-slate-400 mb-10 max-w-xl leading-relaxed animate-fade-in opacity-0" style={{ animationDelay: '400ms' }}>
             We architect advanced AI-driven ERPs, LLMs, and Autonomous Agents. 
             Merging the digital cosmos with tangible business solutions.
-          </motion.p>
+          </p>
 
           {/* Buttons */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-wrap gap-4"
-          >
-            <button className="px-8 py-4 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold transition-all flex items-center gap-2 shadow-[0_0_30px_rgba(147,51,234,0.3)] hover:scale-105">
+          <div className="flex flex-wrap gap-4 animate-fade-in opacity-0" style={{ animationDelay: '600ms' }}>
+            <button className="px-8 py-4 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold transition-transform hover:scale-105 flex items-center gap-2 shadow-[0_0_30px_rgba(147,51,234,0.3)]">
               <Brain className="w-5 h-5" />
               Initialize System
             </button>
-            <button className="px-8 py-4 rounded-full bg-slate-900/50 border border-slate-700 hover:bg-slate-800 text-white font-semibold backdrop-blur-sm transition-all flex items-center gap-2 hover:border-purple-500/50">
+            <button className="px-8 py-4 rounded-full bg-slate-900/50 border border-slate-700 hover:bg-slate-800 text-white font-semibold backdrop-blur-sm transition-colors flex items-center gap-2 hover:border-purple-500/50">
               <Move className="w-5 h-5" />
               View Architecture
             </button>
-          </motion.div>
+          </div>
+
         </div>
       </div>
       
       {/* Bottom Fade Gradient */}
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-slate-950 to-transparent z-0 pointer-events-none" />
+
+      {/* 
+         Simple CSS Animation definitions 
+         (You can move this to your global CSS file) 
+      */}
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+      `}</style>
     </section>
   );
 };
+
+// Preload
+useGLTF.preload('/LeePerrySmith.glb');
 
 export default Hero;

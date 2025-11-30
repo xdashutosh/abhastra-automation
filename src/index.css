@@ -1,3 +1,5 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,7 +7,11 @@
 :root {
   color-scheme: light;
 }
-
+@layer base {
+  * {
+    font-family: 'Nunito', sans-serif;
+  }
+}
 body {
   @apply bg-slate-50 text-slate-900 font-sans overflow-x-hidden;
 

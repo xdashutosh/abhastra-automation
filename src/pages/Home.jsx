@@ -7,8 +7,7 @@ import TechStack from '../components/TechStack';
 import Clients from '../components/Clients';
 import CTA from '../components/CTA';
 import About from '../components/About';
-import Contact from '../components/Contact';
-import ParticleWords from '../components/Particle';
+
 
 const Home = () => {
   const structuredData = {
@@ -129,14 +128,12 @@ const Home = () => {
       </Helmet>
 
       <Hero />
-      {/* <ParticleWords/> */}
       <Services />
       <WhyChoose />
       <TechStack />
       <Clients />
       <CTA />
       <About />
-      <Contact />
     </>
   );
 };

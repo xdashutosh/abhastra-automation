@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import AnimatedIntro from './components/AnimatedIntro';
 
 
 // Pages
@@ -19,18 +18,11 @@ import Blog from './pages/Blog';
 import ContactPage from './pages/ContactPage';
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [introComplete, setIntroComplete] = useState(false);
-
-  const handleIntroComplete = () => {
-    setShowIntro(false);
-    setIntroComplete(true);
-  };
+  
 
   return (
     <HelmetProvider>
       <Router>
-        {showIntro && <AnimatedIntro onComplete={handleIntroComplete} />}
         
         <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-primary selection:text-white">
           <Navbar/>

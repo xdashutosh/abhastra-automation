@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { 
   Github, 
   Linkedin, 
@@ -13,7 +12,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-// Assumed imports based on your previous code
+// Assets
 import logo from '../assets/logo.png';
 import brandname from '../assets/brandname.png';
 
@@ -53,20 +52,21 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: Linkedin, href: '#', color: 'hover:text-blue-500' },
-    { icon: Twitter, href: '#', color: 'hover:text-sky-400' },
-    { icon: Github, href: '#', color: 'hover:text-white' },
-    { icon: Instagram, href: '#', color: 'hover:text-pink-500' },
-    { icon: Youtube, href: '#', color: 'hover:text-red-500' },
+    { icon: Linkedin, href: '#', color: 'hover:text-blue-500', label: 'LinkedIn' },
+    { icon: Twitter, href: '#', color: 'hover:text-sky-400', label: 'Twitter' },
+    { icon: Github, href: '#', color: 'hover:text-white', label: 'GitHub' },
+    { icon: Instagram, href: '#', color: 'hover:text-pink-500', label: 'Instagram' },
+    { icon: Youtube, href: '#', color: 'hover:text-red-500', label: 'YouTube' },
   ];
 
   return (
     <footer className="bg-slate-950 border-t border-white/10 pt-20 pb-10 relative overflow-hidden">
       
-      {/* --- BACKGROUND FX --- */}
+      {/* --- BACKGROUND FX (Static CSS = High Performance) --- */}
       {/* Gradient Orbs */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-900/10 rounded-full blur-[120px] pointer-events-none" />
+      
       {/* Grid Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
@@ -76,16 +76,24 @@ const Footer = () => {
           
           {/* --- COLUMN 1: BRAND & INFO (Span 4) --- */}
           <div className="lg:col-span-4 space-y-6">
-            <a href="#" className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center p-0.5 shadow-lg shadow-blue-500/20">
+            <a href="#" className="flex items-center gap-3 group">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center p-0.5 shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform duration-300">
                 <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden">
-                  <img src={logo} alt="Logo" className="w-8 h-8 object-contain" />
+                  <img 
+                    src={logo} 
+                    alt="Abhastra Logo" 
+                    width="32" 
+                    height="32" 
+                    loading="lazy" 
+                    className="w-8 h-8 object-contain" 
+                  />
                 </div>
               </div>
               <img 
                 src={brandname} 
-                alt="Abhastra" 
-                className="h-8 object-contain brightness-0 invert" // Inverts black text to white for dark mode
+                alt="Abhastra Brand Name" 
+                loading="lazy" 
+                className="h-8 object-contain brightness-0 invert" 
               />
             </a>
             
@@ -95,11 +103,11 @@ const Footer = () => {
 
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-slate-400 text-sm">
-                <MapPin className="w-4 h-4 text-blue-400" />
+                <MapPin className="w-4 h-4 text-blue-400 flex-shrink-0" />
                 <span>Gurugram, Haryana, India</span>
               </div>
               <div className="flex items-center gap-3 text-slate-400 text-sm">
-                <Mail className="w-4 h-4 text-purple-400" />
+                <Mail className="w-4 h-4 text-purple-400 flex-shrink-0" />
                 <a href="mailto:contact@abhastra.com" className="hover:text-white transition-colors">contact@abhastra.com</a>
               </div>
             </div>
@@ -109,7 +117,8 @@ const Footer = () => {
                 <a 
                   key={index} 
                   href={social.href} 
-                  className={`w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 transition-all duration-300 hover:bg-white/10 hover:scale-110 ${social.color}`}
+                  aria-label={social.label}
+                  className={`w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 transition-all duration-300 hover:bg-white/10 hover:-translate-y-1 hover:shadow-lg ${social.color}`}
                 >
                   <social.icon className="w-5 h-5" />
                 </a>
@@ -151,25 +160,25 @@ const Footer = () => {
           <div className="lg:col-span-4">
             <div className="bg-gradient-to-br from-slate-900 to-slate-900/50 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
               {/* Glow effect inside card */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-all" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-all duration-500" />
               
-              <h4 className="font-bold text-white mb-2">Subscribe to our Newsletter</h4>
-              <p className="text-sm text-slate-400 mb-6">
+              <h4 className="font-bold text-white mb-2 relative z-10">Subscribe to our Newsletter</h4>
+              <p className="text-sm text-slate-400 mb-6 relative z-10">
                 Get the latest updates on AI breakthroughs, industry trends, and Abhastra news delivered to your inbox.
               </p>
               
-              <form className="space-y-3">
+              <form className="space-y-3 relative z-10" onSubmit={(e) => e.preventDefault()}>
                 <input 
                   type="email" 
                   placeholder="Enter your email" 
                   className="w-full bg-slate-950 border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 outline-none transition-all placeholder:text-slate-600"
                 />
-                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium py-3 rounded-lg text-sm transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 flex items-center justify-center gap-2">
+                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium py-3 rounded-lg text-sm transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 flex items-center justify-center gap-2 transform active:scale-[0.98]">
                   Subscribe Now
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
-              <p className="text-xs text-slate-600 mt-4 text-center">
+              <p className="text-xs text-slate-600 mt-4 text-center relative z-10">
                 We respect your privacy. Unsubscribe at any time.
               </p>
             </div>
