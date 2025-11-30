@@ -105,7 +105,7 @@ const Services = () => {
             <div
               key={index}
               className={`
-                group relative h-full min-h-[320px] rounded-[32px] 
+                group relative h-full min-h-[240px] rounded-[24px] 
                 bg-[#0B0F19] /* Dark Matte Background */
                 border border-white/[0.08]
                 overflow-hidden transition-all duration-500
@@ -129,27 +129,27 @@ const Services = () => {
               />
               
               {/* Card Content */}
-              <div className="relative z-10 p-8 flex flex-col h-full justify-between">
+              <div className="relative z-10 p-6 flex flex-col h-full justify-between">
                 
                 {/* Icon & Title Group */}
                 <div>
-                  <div className="mb-6 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md group-hover:bg-white/10 transition-colors">
-                    <service.icon className="w-6 h-6 text-slate-200" />
+                  <div className="mb-4 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md group-hover:bg-white/10 transition-colors">
+                    <service.icon className="w-5 h-5 text-slate-200" />
                   </div>
 
-                  <h3 className="text-2xl font-bold mb-3 text-slate-100 tracking-wide">
+                  <h3 className="text-xl font-bold mb-2 text-slate-100 tracking-wide">
                     {service.title}
                   </h3>
                   
-                  <p className="text-slate-400 text-sm leading-relaxed font-medium">
+                  <p className="text-slate-400 text-xs leading-relaxed font-medium">
                     {service.description}
                   </p>
                 </div>
 
                 {/* Footer Link */}
-                <div className="pt-6 flex items-center gap-2 text-sm font-semibold text-slate-300 group-hover:text-white transition-colors cursor-pointer">
+                <div className="pt-4 flex items-center gap-2 text-xs font-semibold text-slate-300 group-hover:text-white transition-colors cursor-pointer">
                   <span>Learn More</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
                 </div>
 
               </div>

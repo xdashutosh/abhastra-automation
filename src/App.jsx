@@ -16,6 +16,7 @@ import LLMs from './pages/services/LLMs';
 import Career from './pages/Career';
 import Blog from './pages/Blog';
 import ContactPage from './pages/ContactPage';
+import SplashCursor from './components/Splash';
 
 function App() {
   
@@ -26,6 +27,7 @@ function App() {
         
         <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-primary selection:text-white">
           <Navbar/>
+          {/* <SplashCursor/> */}
           <main className="overflow-hidden relative">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -37,7 +39,7 @@ function App() {
               <Route path="/services/llms" element={<LLMs />} />
               <Route path="/career" element={<Career />} />
               <Route path="/blog" element={<Blog />} />
-              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/contactus" element={<ContactPage />} />
             </Routes>
           </main>
           <Footer />

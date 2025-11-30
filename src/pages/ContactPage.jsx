@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import Contact from '../components/Contact';
 
 const ContactPage = () => (
-  <div className="pt-20">
+  <div className="">
     <Helmet>
       <title>Contact Us - Get in Touch with Abhastra Automation</title>
       <meta name="description" content="Contact Abhastra Automation for AI automation, ERP development, and custom software solutions. Reach out for consultations, project inquiries, or partnership opportunities." />
