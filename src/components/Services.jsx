@@ -91,7 +91,7 @@ const Services = () => {
         
         {/* --- HEADER (Specific Request) --- */}
         <div className={`text-center mb-20 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-slate-100">
+          <h2 className="text-3xl md:text-5xl font-normal mb-4 text-slate-100">
             Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 via-pink-500 via-red-500 to-orange-500">Expertise</span>
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto text-lg">

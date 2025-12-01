@@ -69,7 +69,7 @@ const Clients = () => {
                Global Partnerships
             </span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-slate-100">
+          <h2 className="text-4xl md:text-6xl font-normal mb-6 text-slate-100">
             Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">Valuable Clients</span>
           </h2>
           <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">

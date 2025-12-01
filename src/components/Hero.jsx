@@ -120,11 +120,7 @@ const Hero = () => {
         
         <div className="max-w-3xl pointer-events-auto">
           
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 backdrop-blur-md border border-purple-500/30 mb-6 animate-fade-in opacity-0" style={{ animationDelay: '0ms' }}>
-            <Sparkles className="w-4 h-4 text-purple-400" />
-            <span className="text-sm font-medium tracking-wide text-purple-100">AI-Powered Neural Systems</span>
-          </div>
+         
 
           {/* Heading */}
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-fade-in opacity-0" style={{ animationDelay: '200ms' }}>
@@ -144,11 +140,11 @@ const Hero = () => {
           <div className="flex flex-wrap gap-4 animate-fade-in opacity-0" style={{ animationDelay: '600ms' }}>
             <button className="px-8 py-4 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold transition-transform hover:scale-105 flex items-center gap-2 shadow-[0_0_30px_rgba(147,51,234,0.3)]">
               <Brain className="w-5 h-5" />
-              Initialize System
+              Our projects
             </button>
             <button className="px-8 py-4 rounded-full bg-slate-900/50 border border-slate-700 hover:bg-slate-800 text-white font-semibold backdrop-blur-sm transition-colors flex items-center gap-2 hover:border-purple-500/50">
               <Move className="w-5 h-5" />
-              View Architecture
+              Our span
             </button>
           </div>
 

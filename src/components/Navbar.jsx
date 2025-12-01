@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, Sparkles, Zap } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import brandname from '../assets/brandname.png';
+import brandname from '../assets/brandnamewhite.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,10 +58,10 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="fixed w-full z-50 top-0 left-0 flex justify-center pt-4 sm:pt-6 px-4">
+    <div className="fixed w-full z-50 top-0 left-0 flex justify-center pt-4 sm:pt-6 px-2">
       <nav
         className={`
-          relative w-full max-w-6xl rounded-2xl transition-all duration-300
+          relative w-full max-w-7xl rounded-2xl transition-all duration-300
           ${scrolled || isOpen 
             ? 'bg-slate-950 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]' 
             : 'bg-transparent border border-transparent'}
@@ -77,13 +77,13 @@ const Navbar = () => {
             <img 
               src={brandname} 
               alt="Brand" 
-              className="h-10 w-auto object-contain md:block hidden invert opacity-90 transition-opacity hover:opacity-100" 
+              className="h-14 w-auto object-contain md:block hidden  opacity-90 transition-opacity hover:opacity-100" 
             />
              {/* Mobile Logo Fallback */}
              <img 
               src={brandname} 
               alt="Brand" 
-              className="md:hidden h-8 w-auto object-contain invert opacity-90 transition-opacity hover:opacity-100" 
+              className="md:hidden h-8 w-auto object-contain  opacity-90 transition-opacity hover:opacity-100" 
             />
           </Link>
 

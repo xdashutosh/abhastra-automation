@@ -14,7 +14,7 @@ import {
 
 // Assets
 import logo from '../assets/logo.png';
-import brandname from '../assets/brandname.png';
+import brandname from '../assets/brandnamewhite.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -93,7 +93,7 @@ const Footer = () => {
                 src={brandname} 
                 alt="Abhastra Brand Name" 
                 loading="lazy" 
-                className="h-8 object-contain brightness-0 invert" 
+                className="h-8 object-contain  " 
               />
             </a>
             

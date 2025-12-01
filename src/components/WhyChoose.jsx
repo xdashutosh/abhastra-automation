@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Zap, Shield, Users, TrendingUp, Award, Sparkles, ArrowRight, Plus } from 'lucide-react';
-
+import logo from '../assets/logo.png';
 // -----------------------------------------------------------------------------
 // 1. UTILS
 // -----------------------------------------------------------------------------
@@ -246,7 +246,7 @@ const IntegrationMap = ({ items }) => {
         <div className="w-20 h-20 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-slate-900 to-slate-800 border border-blue-500/30 flex items-center justify-center shadow-[0_0_50px_-10px_rgba(59,130,246,0.5)] relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent opacity-50" />
             <div className="relative z-10 text-center">
-                <span className="block text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-white pb-1">a</span>
+                <span className="block bg-clip-text bg-gradient-to-r from-blue-400 to-white pb-1"><img src={logo} className='h-12 '/></span>
             </div>
             <div className="absolute inset-0 rounded-full border-t border-l border-blue-500/50 animate-spin-slow" />
         </div>
@@ -381,7 +381,7 @@ const WhyChoose = () => {
           <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-xs md:text-sm font-semibold tracking-wide uppercase">
             Ecosystem
           </div>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-slate-100">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-normal mb-4 md:mb-6 text-slate-100">
             One Unified <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">AI Space</span>
           </h2>
           <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
@@ -403,7 +403,7 @@ const WhyChoose = () => {
             <div className="absolute -left-20 top-0 w-40 h-40 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:8px_8px] opacity-20 pointer-events-none hidden lg:block" />
 
             <div>
-              <h3 className="text-3xl md:text-5xl font-bold text-slate-100 mb-4 md:mb-6">
+              <h3 className="text-3xl md:text-5xl font-normal text-slate-100 mb-4 md:mb-6">
                 Trusted by <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Industry Leaders</span>
               </h3>

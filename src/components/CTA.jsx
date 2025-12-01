@@ -88,7 +88,7 @@ const CTA = () => {
         </div>
 
         {/* Heading */}
-        <h2 className={`text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <h2 className={`text-5xl md:text-7xl font-normal text-white mb-6 tracking-tight transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500">Automate</span> Everything?
         </h2>
         

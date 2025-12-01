@@ -81,7 +81,7 @@ const TechStack = () => {
               Our Arsenal
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-100 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-normal mb-6 text-slate-100 tracking-tight">
             Powered by <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">Modern Tech</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">

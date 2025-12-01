@@ -124,7 +124,7 @@ const About = () => {
 
           {/* --- RIGHT SIDE: CONTENT & STATS --- */}
           <div className={`lg:w-1/2 w-full transition-all duration-1000 delay-200 ease-out ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-slate-100 leading-tight tracking-tight">
+            <h2 className="text-4xl md:text-6xl font-normal mb-8 text-slate-100 leading-tight tracking-tight">
               Bridging the Gap <br /> Between <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient-text bg-[length:200%_auto]">
                 Hardware & AI

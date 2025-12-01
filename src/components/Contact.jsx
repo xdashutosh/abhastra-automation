@@ -4,6 +4,16 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, ExternalLink, Globe } from 'lucide-react';
 
 const Contact = () => {
+  // Configuration for countries/flags
+  const countries = [
+    { code: 'in', name: 'India' },
+    { code: 'us', name: 'USA' },
+    { code: 'gb', name: 'United Kingdom' },
+    { code: 'ae', name: 'UAE' },
+    { code: 'de', name: 'Germany' },
+    { code: 'au', name: 'Australia' },
+  ];
+
   return (
     <section id="contact" className="min-h-screen bg-slate-950 relative overflow-hidden pt-24 pb-20">
       
@@ -22,28 +32,52 @@ const Contact = () => {
       <div className="container mx-auto px-6 relative z-10">
         
         {/* HEADER */}
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 mb-6 shadow-lg shadow-green-500/10"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            <span className="text-xs font-mono text-slate-300 uppercase tracking-widest">We are Online</span>
-          </motion.div>
+        <div className="text-center mt-10 mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
             Let's Start a <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Conversation</span>
           </h1>
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+          <p className="text-slate-400 max-w-2xl mx-auto text-lg mb-12">
             Whether you have a question about our AI features, trials, pricing, or just want to say hello, our team is ready to answer all your questions.
           </p>
+
+          {/* --- NEW SECTION: GLOBAL CLIENTS --- */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col items-center justify-center space-y-6"
+          >
+            <span className="text-xs font-bold tracking-[0.2em] text-slate-500 uppercase">
+              We worked with clients worldwide
+            </span>
+            
+            <div className="flex flex-wrap justify-center gap-6 md:gap-8 items-center">
+              {countries.map((country, index) => (
+                <motion.div
+                  key={country.code}
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  className="group relative flex flex-col items-center"
+                >
+                  <div className="w-12 h-12 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden shadow-lg group-hover:border-slate-600 transition-colors">
+                    <img
+                      src={`https://flagcdn.com/${country.code}.svg`}
+                      alt={country.name}
+                      className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    />
+                  </div>
+                  {/* Tooltip text */}
+                  <span className="absolute -bottom-6 text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    {country.name}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+            
+            <div className="h-px w-24 bg-gradient-to-r from-transparent via-slate-700 to-transparent mt-4" />
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mt-16">
           
           {/* --- LEFT SIDE: INFO & FORM --- */}
           <div className="space-y-10">
