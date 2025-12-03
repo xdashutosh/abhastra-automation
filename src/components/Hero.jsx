@@ -2,7 +2,8 @@ import React, { useRef, Suspense, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { PointMaterial, Stars, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
-import { Brain, Sparkles, Move } from 'lucide-react';
+import { Brain, Sparkles, Move, Fingerprint, Quote } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // -----------------------------------------------------------------------------
 // 1. PARTICLE FACE COMPONENT
@@ -118,12 +119,12 @@ const Hero = () => {
       {/* Content Overlay */}
       <div className="relative z-10 container mx-auto px-6 h-full flex flex-col justify-center items-start pointer-events-none">
         
-        <div className="max-w-3xl pointer-events-auto">
+        <div className="max-w-3xl pointer-events-auto mb-6">
           
          
 
           {/* Heading */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-fade-in opacity-0" style={{ animationDelay: '200ms' }}>
+          <h1 className="text-5xl  md:text-7xl font-bold mb-6 leading-tight animate-fade-in opacity-0" style={{ animationDelay: '200ms' }}>
             Automating Everything <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
               With Intelligence
@@ -137,16 +138,19 @@ const Hero = () => {
           </p>
 
           {/* Buttons */}
+          <Link to={'/contactus'}>
+         
           <div className="flex flex-wrap gap-4 animate-fade-in opacity-0" style={{ animationDelay: '600ms' }}>
             <button className="px-8 py-4 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold transition-transform hover:scale-105 flex items-center gap-2 shadow-[0_0_30px_rgba(147,51,234,0.3)]">
-              <Brain className="w-5 h-5" />
-              Our projects
+              <Fingerprint className="w-5 h-5" />
+              Get In Touch
             </button>
             <button className="px-8 py-4 rounded-full bg-slate-900/50 border border-slate-700 hover:bg-slate-800 text-white font-semibold backdrop-blur-sm transition-colors flex items-center gap-2 hover:border-purple-500/50">
-              <Move className="w-5 h-5" />
-              Our span
+              <Quote className="w-5 h-5" />
+              Get Quote
             </button>
           </div>
+           </Link>
 
         </div>
       </div>

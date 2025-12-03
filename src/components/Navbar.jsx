@@ -53,6 +53,8 @@ const Navbar = () => {
       ]
     },
     { name: 'Career', path: '/career' },
+    { name: 'Industries', path: '/industries' },
+    { name: 'Development Cycle', path: '/software-development-cycle' },
     { name: 'Blog', path: '/blog' },
     { name: 'Contact us', path: '/contactus' },
   ];
@@ -83,7 +85,7 @@ const Navbar = () => {
              <img 
               src={brandname} 
               alt="Brand" 
-              className="md:hidden h-8 w-auto object-contain  opacity-90 transition-opacity hover:opacity-100" 
+              className="md:hidden h-10 w-auto object-contain  opacity-90 transition-opacity hover:opacity-100" 
             />
           </Link>
 

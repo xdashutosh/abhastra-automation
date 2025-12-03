@@ -17,6 +17,11 @@ import Career from './pages/Career';
 import Blog from './pages/Blog';
 import ContactPage from './pages/ContactPage';
 import SplashCursor from './components/Splash';
+import PrivacyPolicy from './pages/Privacy';
+import TermsAndConditions from './pages/Terms';
+import RefundPolicy from './pages/Refund';
+import Industries from './pages/Industries';
+import SoftwareDevelopmentCycle from './pages/Development';
 
 function App() {
   
@@ -38,8 +43,14 @@ function App() {
               <Route path="/services/app-web-development" element={<AppWebDevelopment />} />
               <Route path="/services/llms" element={<LLMs />} />
               <Route path="/career" element={<Career />} />
+              <Route path="/industries" element={<Industries />} />
+              <Route path="/software-development-cycle" element={<SoftwareDevelopmentCycle />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/contactus" element={<ContactPage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+              <Route path="/terms&condition" element={<TermsAndConditions/>} />
+              <Route path="/refund-policy" element={<RefundPolicy/>} />
+              
             </Routes>
           </main>
           <Footer />

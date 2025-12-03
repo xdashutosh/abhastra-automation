@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // -----------------------------------------------------------------------------
 // 1. REUSABLE HOOK (Lightweight Intersection Observer)
@@ -108,12 +109,14 @@ const CTA = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/80 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out z-10" />
 
             {/* Button Content */}
+            <Link to={'/contactus'}>
             <span className="relative z-20 text-slate-900 flex items-center gap-3">
               Start Your Journey
               <div className="p-1 rounded-full bg-slate-900 text-white group-hover:bg-blue-600 transition-colors duration-300">
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </div>
             </span>
+            </Link>
           </button>
         </div>
 
