@@ -85,7 +85,7 @@ const Contact = () => {
             {/* Contact Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { icon: Phone, label: "Call Us", value: "+91-6350669414", href: "tel:+916350669414", color: "text-blue-400" },
+                { icon: Phone, label: "Call Us", value: "+91-6350669414", href: "tel:+9185071 41727", color: "text-blue-400" },
                 { icon: Mail, label: "Email Us", value: "contact@abhastra.com", href: "mailto:contact@abhastra.com", color: "text-purple-400" },
                 { icon: MapPin, label: "Visit Us", value: "Sector 44, Gurugram", href: "https://maps.google.com/?q=Abhastra+Automation+Pvt.+Limited", color: "text-pink-400" },
                 { icon: Globe, label: "Website", value: "abhastra.com", href: "https://abhastra.com", color: "text-cyan-400" }
